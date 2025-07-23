@@ -44,6 +44,7 @@ type Mutation {
 type Query {
   department(id: Int!): Department!
   departments: [Department!]!
+  findAll: [Staff!]!
   findAllStaff: [Staff!]!
   findStaff(id: Int!): Staff!
   role(id: Int!): Role!

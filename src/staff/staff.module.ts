@@ -4,5 +4,6 @@ import { StaffResolver } from './staff.resolver';
 
 @Module({
   providers: [StaffResolver, StaffService],
+  exports: [StaffService]
 })
 export class StaffModule {}
