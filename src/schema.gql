@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateDepartmentInput {
+  departmentName: String!
+}
+
+input CreateRoleInput {
+  name: String!
+}
+
+input CreateStaffInput {
+  departmentId: Int!
+  roleId: Int!
+  staffPass: String!
+  staffUser: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Department {
+  createdAt: DateTime!
+  departmentName: String!
+  id: Int!
+}
+
+type Mutation {
+  createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  createStaff(createStaffInput: CreateStaffInput!): Staff!
+  login(staffPass: String!, staffUser: String!): String!
+  removeDepartment(id: Int!): Department!
+  removeRole(id: Int!): Role!
+  removeStaff(id: Int!): Staff!
+  testCreate(createDepartmentInput: CreateDepartmentInput!): Boolean!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
+}
+
+type Query {
+  department(id: Int!): Department!
+  departments: [Department!]!
+  findAllStaff: [Staff!]!
+  findStaff(id: Int!): Staff!
+  role(id: Int!): Role!
+}
+
+type Role {
+  id: Float!
+  name: String!
+}
+
+type Staff {
+  createdAt: DateTime!
+  department: Department!
+  departmentId: Int!
+  id: Float!
+  role: Role!
+  roleId: Int!
+  staffPass: String!
+  staffUser: String!
+}
+
+input UpdateRoleInput {
+  id: Int!
+  name: String
+}
+
+input UpdateStaffInput {
+  departmentId: Int
+  id: Int!
+  roleId: Int
+  staffPass: String
+  staffUser: String
+}
