@@ -8,7 +8,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DepartmentModule } from './department/department.module';
 import { StaffModule } from './staff/staff.module';
 import { RoleModule } from './role/role.module';
-import { AuthModule } from './Auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
