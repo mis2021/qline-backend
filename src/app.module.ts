@@ -15,7 +15,6 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
     // GraphQL setup
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

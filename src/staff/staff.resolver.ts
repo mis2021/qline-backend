@@ -13,12 +13,10 @@ export class StaffResolver {
   create(@Args('createStaffInput') createStaffInput: CreateStaffInput) {
     return this.staffService.create(createStaffInput);
   }
-
   @Query(() => [Staff], { name: 'findAllStaff' })
   findAll() {
     return this.staffService.findAll();
   }
-
   @Query(() => Staff, { name: 'findStaff' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
     const staff = await this.staffService.findOne(id);
