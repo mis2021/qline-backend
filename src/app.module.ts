@@ -15,16 +15,14 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // GraphQL setup
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      introspection: true,
       sortSchema: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
-
-    // Your other modules
     PrismaModule,
     StaffModule,
     DepartmentModule,
