@@ -48,6 +48,7 @@ type Query {
   findAllStaff: [Staff!]!
   findStaff(id: Int!): Staff!
   role(id: Int!): Role!
+  roles: [Role!]!
 }
 
 type Role {

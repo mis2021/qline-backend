@@ -13,10 +13,11 @@ export class RoleResolver {
     return this.roleService.create(createRoleInput);
   }
 
-  @Query(() => [Role], { name: 'role' })
-  findAll() {
-    return this.roleService.findAll();
-  }
+@Query(() => [Role], { name: 'roles' })
+findAll() {
+  return this.roleService.findAll();
+}
+
 
   @Query(() => Role, { name: 'role' })
   findOne(@Args('id', { type: () => Int }) id: number) {

@@ -4,7 +4,6 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 export class Role {
   @Field()
   id: number;
-
   @Field()
   name: string;
 }
