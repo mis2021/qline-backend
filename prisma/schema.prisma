@@ -14,7 +14,7 @@ datasource db {
 }
 model Department{
   id Int @id@default(autoincrement())
-  departmentName String?
+  departmentName String @unique
   staff Staff[]
   createdAt DateTime @default(now())
 }

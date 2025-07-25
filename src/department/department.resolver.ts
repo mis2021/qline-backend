@@ -13,21 +13,22 @@ export class DepartmentResolver {
   createDepartment(
     @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
   ) {
+    console.log('Created Department', createDepartmentInput)
     return this.departmentService.create(createDepartmentInput);
   }
 
-  @Mutation(() => Boolean)
-  async testCreate(
-    @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
-  ): Promise<boolean> {
-    try {
-      await this.departmentService.create(createDepartmentInput);
-      return true;
-    } catch (error) {
-      console.error('Create failed:', error);
-      return false;
-    }
-  }
+  // @Mutation(() => Boolean)
+  // async testCreate(
+  //   @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
+  // ): Promise<boolean> {
+  //   try {
+  //     await this.departmentService.create(createDepartmentInput);
+  //     return true;
+  //   } catch (error) {
+  //     console.error('Create failed:', error);
+  //     return false;
+  //   }
+  // }
 
   @Query(() => [Department], { name: 'departments' })
   findAll() {
@@ -49,6 +50,7 @@ export class DepartmentResolver {
 
   @Mutation(() => Department)
   async removeDepartment(@Args('id', { type: () => Int }) id: number) {
+    console.log("Department Deleted" ,id)
     return this.departmentService.remove(id);
   }
 }

@@ -18,18 +18,20 @@ export class DepartmentService {
   findAll() {
     return this.prisma.department.findMany();
   }
-   update(id: number, updateDepartmentInput: UpdateDepartmentInput) {
-      return this.prisma.department.update({
-        where: { id },
-        data: updateDepartmentInput,
-      });
-    }
+  update(id: number, updateDepartmentInput: UpdateDepartmentInput) {
+    return this.prisma.department.update({
+      where: { id },
+      data: updateDepartmentInput,
+    });
+  }
 
   findOne(id: number) {
     return this.prisma.department.findUnique({ where: { id } });
   }
 
-  remove(id: number) {
-    return this.prisma.department.delete({ where: { id } });
-  }
+ async remove(id: number) {
+  const deletedDepartment = await this.prisma.department.delete({ where: { id } });
+  console.log("Department Deleted", id);
+  return deletedDepartment;
+}
 }
