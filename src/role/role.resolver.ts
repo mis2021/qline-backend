@@ -17,8 +17,6 @@ export class RoleResolver {
 findAll() {
   return this.roleService.findAll();
 }
-
-
   @Query(() => Role, { name: 'role' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.roleService.findOne(id);

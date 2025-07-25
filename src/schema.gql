@@ -37,6 +37,7 @@ type Mutation {
   removeRole(id: Int!): Role!
   removeStaff(id: Int!): Staff!
   testCreate(createDepartmentInput: CreateDepartmentInput!): Boolean!
+  updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
   updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
 }
@@ -65,6 +66,11 @@ type Staff {
   roleId: Int!
   staffPass: String!
   staffUser: String!
+}
+
+input UpdateDepartmentInput {
+  departmentName: String!
+  id: Int!
 }
 
 input UpdateRoleInput {

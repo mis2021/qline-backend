@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateDepartmentInput } from './dto/create-department.input';
+import { UpdateDepartmentInput } from './dto/update-department.input';
 
 @Injectable()
 export class DepartmentService {
@@ -17,6 +18,12 @@ export class DepartmentService {
   findAll() {
     return this.prisma.department.findMany();
   }
+   update(id: number, updateDepartmentInput: UpdateDepartmentInput) {
+      return this.prisma.department.update({
+        where: { id },
+        data: updateDepartmentInput,
+      });
+    }
 
   findOne(id: number) {
     return this.prisma.department.findUnique({ where: { id } });

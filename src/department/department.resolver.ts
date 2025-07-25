@@ -3,6 +3,7 @@ import { DepartmentService } from './department.service';
 import { Department } from './entities/department.entity';
 import { CreateDepartmentInput } from './dto/create-department.input';
 import { NotFoundException } from '@nestjs/common';
+import { UpdateDepartmentInput } from './dto/update-department.input';
 
 @Resolver(() => Department)
 export class DepartmentResolver {
@@ -41,6 +42,10 @@ export class DepartmentResolver {
     }
     return department;
   }
+    @Mutation(() => Department)
+    updateDepartment(@Args('updateDepartmentInput') updateDepartmentInput: UpdateDepartmentInput) {
+      return this.departmentService.update(updateDepartmentInput.id, updateDepartmentInput);
+    }
 
   @Mutation(() => Department)
   async removeDepartment(@Args('id', { type: () => Int }) id: number) {
