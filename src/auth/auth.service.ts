@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +18,11 @@ export class AuthService {
       include: { role: true },
     });
 
-    if (user && user.staffPass === staffPass) {
+    if (user && (await bcrypt.compare(staffPass, user.staffPass))) {
       const { staffPass, ...result } = user;
       return result;
     }
+
     throw new UnauthorizedException('Invalid username or password');
   }
 

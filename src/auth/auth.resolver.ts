@@ -21,7 +21,6 @@ export class AuthResolver {
     const token = await this.authService.login(user);
     return token.access_token;
   }
-
   @UseGuards(JwtAuthGuard)
   @Query(() => [Staff])
   findAll() {
