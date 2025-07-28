@@ -36,7 +36,7 @@ type Login {
 
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
-  createQueue(departmentId: Float!): String!
+  createQueue(departmentId: Int!): String!
   createRole(createRoleInput: CreateRoleInput!): Role!
   createStaff(createStaffInput: CreateStaffInput!): Staff!
   login(staffPass: String!, staffUser: String!): Login!
@@ -54,8 +54,18 @@ type Query {
   findAll: [Staff!]!
   findAllStaff: [Staff!]!
   findStaff(id: Int!): Staff!
+  queuesByDepartment(departmentId: Int!): [Queue!]!
   role(id: Int!): Role!
   roles: [Role!]!
+}
+
+type Queue {
+  Department: Department!
+  createdAt: DateTime!
+  departmentId: Int!
+  id: Int!
+  number: Int!
+  status: String!
 }
 
 type Role {
