@@ -28,11 +28,17 @@ type Department {
   id: Int!
 }
 
+type Login {
+  access_token: String!
+  role: String!
+  success: Boolean!
+}
+
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createRole(createRoleInput: CreateRoleInput!): Role!
   createStaff(createStaffInput: CreateStaffInput!): Staff!
-  login(staffPass: String!, staffUser: String!): String!
+  login(staffPass: String!, staffUser: String!): Login!
   removeDepartment(id: Int!): Department!
   removeRole(id: Int!): Role!
   removeStaff(id: Int!): Staff!
