@@ -16,20 +16,6 @@ export class DepartmentResolver {
     console.log('Created Department', createDepartmentInput)
     return this.departmentService.create(createDepartmentInput);
   }
-
-  // @Mutation(() => Boolean)
-  // async testCreate(
-  //   @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
-  // ): Promise<boolean> {
-  //   try {
-  //     await this.departmentService.create(createDepartmentInput);
-  //     return true;
-  //   } catch (error) {
-  //     console.error('Create failed:', error);
-  //     return false;
-  //   }
-  // }
-
   @Query(() => [Department], { name: 'departments' })
   findAll() {
     return this.departmentService.findAll();

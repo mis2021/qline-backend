@@ -36,6 +36,7 @@ type Login {
 
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
+  createQueue(departmentId: Float!): String!
   createRole(createRoleInput: CreateRoleInput!): Role!
   createStaff(createStaffInput: CreateStaffInput!): Staff!
   login(staffPass: String!, staffUser: String!): Login!

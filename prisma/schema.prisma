@@ -17,6 +17,8 @@ model Department{
   departmentName String @unique
   staff Staff[]
   createdAt DateTime @default(now())
+
+  Queue Queue[]
 }
 model Role {
   id Int @id@default(autoincrement())
@@ -33,4 +35,13 @@ model Staff {
   departmentId Int
   createdAt DateTime @default(now())
 }
+model Queue {
+  id           Int       @id @default(autoincrement())
+  number       Int
+  Department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  status       String    @default("WAITING")
+  createdAt    DateTime  @default(now())
+}
+
 

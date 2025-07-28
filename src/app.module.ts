@@ -9,6 +9,7 @@ import { DepartmentModule } from './department/department.module';
 import { StaffModule } from './staff/staff.module';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
     DepartmentModule,
     RoleModule,
     AuthModule,
+    QueueModule,
   ],
 })
 export class AppModule {}

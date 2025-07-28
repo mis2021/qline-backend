@@ -10,7 +10,6 @@ export class StaffService {
 
   async create(createStaffInput: CreateStaffInput) {
     const hashedPassword = await bcrypt.hash(createStaffInput.staffPass, 10);
-
     return this.prisma.staff.create({
       data: {
         staffUser: createStaffInput.staffUser,
