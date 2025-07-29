@@ -1,7 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { QueueService } from './queue.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Queue } from 'src/queue/entities/queue.model';
+import { CreateQueueInput } from './dto/create-queue.input';
+import { Queue } from './entities/queue.model';
 
 @Resolver(() => Queue)
 export class QueueResolver {
@@ -21,41 +22,33 @@ export class QueueResolver {
   }
 
   @Mutation(() => String)
-   @Mutation(() => String)
-  async createQueue(input: Queue) {
-  const { departmentId, type, priority, status } = input;
+async createQueue(
+  @Args('createQueueInput') input: CreateQueueInput,
+): Promise<string> {
+  const { departmentId, type, priority, status = 'WAITING' } = input;
 
   const count = await this.prisma.queue.count({
     where: { departmentId },
   });
 
-const queue = await this.prisma.queue.create({
-  data: {
-    departmentId,
-    number: count + 1,
-    type,
-    priority,
-    status,
-  },
-  include: {
-    department: true, 
-  },
-});
-
-
-  const prefix = queue.department.departmentName.slice(0, 4).toUpperCase();
-  const formattedQueue = `${prefix}-${queue.number}`;
-
-  this.queueService.emitQueue({
-    number: formattedQueue,
-    department: queue.department.departmentName,
-    status: queue.status,
+  const queue = await this.prisma.queue.create({
+    data: {
+      departmentId,
+      number: count + 1,
+      type,
+      priority,
+      status,
+    },
+    include: {
+      department: true,
+    },
   });
 
-  return `${formattedQueue}`;
+  const prefix = queue.department.departmentName
+    .slice(0, 4)
+    .toUpperCase();
+  const formattedQueue = `${prefix}-${queue.number}`;
+
+  return formattedQueue;
 }
 }
-
-
-
- 
