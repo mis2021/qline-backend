@@ -29,23 +29,26 @@ export class QueueResolver {
     where: { departmentId },
   });
 
-  const queue = await this.prisma.queue.create({
-    data: {
-      departmentId,
-      number: count + 1,
-      type,
-      priority,
-      status,
-    },
-    include: { Department: true },
-  });
+const queue = await this.prisma.queue.create({
+  data: {
+    departmentId,
+    number: count + 1,
+    type,
+    priority,
+    status,
+  },
+  include: {
+    department: true, 
+  },
+});
 
-  const prefix = queue.Department.departmentName.slice(0, 4).toUpperCase();
+
+  const prefix = queue.department.departmentName.slice(0, 4).toUpperCase();
   const formattedQueue = `${prefix}-${queue.number}`;
 
   this.queueService.emitQueue({
     number: formattedQueue,
-    department: queue.Department.departmentName,
+    department: queue.department.departmentName,
     status: queue.status,
   });
 
