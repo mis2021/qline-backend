@@ -58,7 +58,7 @@ export class QueueResolver {
     status: queue.status,
   });
 
-  return `${formattedQueue}.`;
+  return `${formattedQueue}`;
 }
 }
 
