@@ -46,6 +46,6 @@ async createQueue(
     status: queue.status,
   });
 
-  return `Queue number ${formattedQueue} created for ${queue.Department.departmentName}`;
+  return `Queue number, ${formattedQueue} has been issued. Kindly proceed to the ${queue.Department.departmentName} department.`;
 }
 }
