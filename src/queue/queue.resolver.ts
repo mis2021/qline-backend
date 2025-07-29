@@ -58,7 +58,7 @@ export class QueueResolver {
     status: queue.status,
   });
 
-  return `Queue number, ${formattedQueue} has been issued. Kindly proceed to the ${queue.Department.departmentName} department.`;
+  return `${formattedQueue}.`;
 }
 }
 
