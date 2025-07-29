@@ -21,40 +21,31 @@ export class QueueResolver {
   }
 
   @Mutation(() => String)
-  async createQueue(
-    @Args('departmentId', { type: () => Int }) departmentId: number,
-  ): Promise<string> {
-    const department = await this.prisma.department.findUnique({
-      where: { id: departmentId },
-    });
+async createQueue(
+  @Args('departmentId', { type: () => Int }) departmentId: number,
+): Promise<string> {
+  const count = await this.prisma.queue.count({
+    where: { departmentId },
+  });
 
-    if (!department) {
-      throw new Error('Department does not exist');
-    }
+  const queue = await this.prisma.queue.create({
+    data: {
+      departmentId,
+      number: count + 1,
+      status: 'WAITING',
+    },
+    include: { Department: true },
+  });
 
-    if (department.departmentName.toUpperCase() === 'ADMIN') {
-      throw new Error('ADMIN is not allowed to create a queue');
-    }
+  const prefix = queue.Department.departmentName.slice(0, 4).toUpperCase();
+  const formattedQueue = `${prefix}-${queue.number}`;
 
-    const count = await this.prisma.queue.count({
-      where: { departmentId },
-    });
+  this.queueService.emitQueue({
+    number: formattedQueue,
+    department: queue.Department.departmentName,
+    status: queue.status,
+  });
 
-    const queue = await this.prisma.queue.create({
-      data: {
-        departmentId,
-        number: count + 1,
-        status: 'WAITING',
-      },
-      include: { Department: true },
-    });
-
-    this.queueService.emitQueue({
-      number: queue.number,
-      department: queue.Department.departmentName,
-      status: queue.status,
-    });
-
-    return `Queue number ${queue.number} created for ${queue.Department.departmentName}`;
-  }
+  return `Queue number ${formattedQueue} created for ${queue.Department.departmentName}`;
+}
 }
