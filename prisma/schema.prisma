@@ -31,7 +31,6 @@ model Staff {
   department   Department @relation(fields: [departmentId], references: [id])
   role         Role       @relation(fields: [roleId], references: [id])
 }
-
 model Queue {
   id           Int        @id @default(autoincrement())
   number       Int
