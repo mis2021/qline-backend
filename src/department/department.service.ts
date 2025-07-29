@@ -15,9 +15,16 @@ export class DepartmentService {
     });
   }
 
-  findAll() {
-    return this.prisma.department.findMany();
-  }
+ async findAll() {
+  return this.prisma.department.findMany({
+    where: {
+      NOT: {
+        id: 1,
+      },
+    },
+  });
+}
+
   update(id: number, updateDepartmentInput: UpdateDepartmentInput) {
     return this.prisma.department.update({
       where: { id },

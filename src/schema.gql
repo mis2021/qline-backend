@@ -36,7 +36,7 @@ type Login {
 
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
-  createQueue(departmentId: Int!): String!
+  createQueue: String!
   createRole(createRoleInput: CreateRoleInput!): Role!
   createStaff(createStaffInput: CreateStaffInput!): Staff!
   login(staffPass: String!, staffUser: String!): Login!
@@ -65,7 +65,9 @@ type Queue {
   departmentId: Int!
   id: Int!
   number: Int!
+  priority: String!
   status: String!
+  type: String!
 }
 
 type Role {
