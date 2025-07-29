@@ -13,7 +13,7 @@ export class DepartmentResolver {
   createDepartment(
     @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
   ) {
-    console.log('Created Department', createDepartmentInput)
+    console.log('Created Department', createDepartmentInput);
     return this.departmentService.create(createDepartmentInput);
   }
   @Query(() => [Department], { name: 'departments' })
@@ -28,14 +28,19 @@ export class DepartmentResolver {
     }
     return department;
   }
-    @Mutation(() => Department)
-    updateDepartment(@Args('updateDepartmentInput') updateDepartmentInput: UpdateDepartmentInput) {
-      return this.departmentService.update(updateDepartmentInput.id, updateDepartmentInput);
-    }
+  @Mutation(() => Department)
+  updateDepartment(
+    @Args('updateDepartmentInput') updateDepartmentInput: UpdateDepartmentInput,
+  ) {
+    return this.departmentService.update(
+      updateDepartmentInput.id,
+      updateDepartmentInput,
+    );
+  }
 
   @Mutation(() => Department)
   async removeDepartment(@Args('id', { type: () => Int }) id: number) {
-    console.log("Department Deleted" ,id)
+    console.log('Department Deleted', id);
     return this.departmentService.remove(id);
   }
 }
