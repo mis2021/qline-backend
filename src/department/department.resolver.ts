@@ -2,8 +2,8 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { DepartmentService } from './department.service';
 import { Department } from './entities/department.entity';
 import { CreateDepartmentInput } from './dto/create-department.input';
+import { NotFoundException } from '@nestjs/common';
 import { UpdateDepartmentInput } from './dto/update-department.input';
-import { NotFoundException, ForbiddenException } from '@nestjs/common';
 
 @Resolver(() => Department)
 export class DepartmentResolver {
@@ -20,22 +20,14 @@ export class DepartmentResolver {
   findAll() {
     return this.departmentService.findAll();
   }
-
-@Query(() => Department, { name: 'department' })
-async findOne(@Args('id', { type: () => Int }) id: number) {
-  const department = await this.departmentService.findOne(id);
-  
-  if (!department) {
-    throw new NotFoundException(`Department with ID ${id} not found`);
+  @Query(() => Department, { name: 'department' })
+  async findOne(@Args('id', { type: () => Int }) id: number) {
+    const department = await this.departmentService.findOne(id);
+    if (!department) {
+      throw new NotFoundException(`Department with ID ${id} not found`);
+    }
+    return department;
   }
-
-  if (department.departmentName.toUpperCase() === 'ADMIN') {
-    throw new ForbiddenException('Access to ADMIN department is not allowed');
-  }
-
-  return department;
-}
-
     @Mutation(() => Department)
     updateDepartment(@Args('updateDepartmentInput') updateDepartmentInput: UpdateDepartmentInput) {
       return this.departmentService.update(updateDepartmentInput.id, updateDepartmentInput);

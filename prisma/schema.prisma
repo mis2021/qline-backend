@@ -38,6 +38,8 @@ model Staff {
 model Queue {
   id           Int       @id @default(autoincrement())
   number       Int
+  type String
+  priority String
   Department   Department @relation(fields: [departmentId], references: [id])
   departmentId Int
   status       String    @default("WAITING")
