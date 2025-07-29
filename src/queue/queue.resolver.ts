@@ -21,14 +21,26 @@ export class QueueResolver {
   }
 
   @Mutation(() => String)
-async createQueue(
-  @Args('departmentId', { type: () => Int }) departmentId: number,
-): Promise<string> {
-  const count = await this.prisma.queue.count({
-    where: { departmentId },
-  });
+  async createQueue(
+    @Args('departmentId', { type: () => Int }) departmentId: number,
+  ): Promise<string> {
+    const department = await this.prisma.department.findUnique({
+      where: { id: departmentId },
+    });
 
-  const queue = await this.prisma.queue.create({
+    if (!department) {
+      throw new Error('Department does not exist');
+    }
+
+    if (department.departmentName.toUpperCase() === 'ADMIN') {
+      throw new Error('ADMIN is not allowed to create a queue');
+    }
+
+    const count = await this.prisma.queue.count({
+      where: { departmentId },
+    });
+
+     const queue = await this.prisma.queue.create({
     data: {
       departmentId,
       number: count + 1,
@@ -49,3 +61,6 @@ async createQueue(
   return `Queue number, ${formattedQueue} has been issued. Kindly proceed to the ${queue.Department.departmentName} department.`;
 }
 }
+
+
+ 
