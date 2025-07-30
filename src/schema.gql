@@ -51,6 +51,7 @@ type Mutation {
   removeRole(id: Int!): Role!
   removeStaff(id: Int!): Staff!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
+  updateQueue(updateQueueInput: UpdateQueueInput!): Queue!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
   updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
 }
@@ -70,6 +71,7 @@ type Queue {
   Department: Department!
   createdAt: DateTime!
   departmentId: Int!
+  departmentName: String!
   id: Int!
   number: Int!
   priority: String!
@@ -96,6 +98,14 @@ type Staff {
 input UpdateDepartmentInput {
   departmentName: String!
   id: Int!
+}
+
+input UpdateQueueInput {
+  departmentId: Int
+  id: Int!
+  priority: String
+  status: String!
+  type: String
 }
 
 input UpdateRoleInput {

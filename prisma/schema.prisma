@@ -1,12 +1,10 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model Department {
   id             Int      @id @default(autoincrement())
   departmentName String   @unique
@@ -14,7 +12,6 @@ model Department {
   Queue          Queue[]
   staff          Staff[]
 }
-
 model Role {
   id    Int     @id @default(autoincrement())
   name  String  @unique

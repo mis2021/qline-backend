@@ -7,14 +7,17 @@ export class Queue {
   id: number;
   @Field(() => Int)
   number: number;
-   @Field(() => String)
+  @Field(() => String)
   priority: string;
-   @Field(() => String)
+  @Field(() => String)
   type: string;
+
   @Field(() => Department)
   Department: Department;
   @Field(() => Int)
   departmentId: number;
+@Field()
+departmentName: string;
   @Field()
   status: string;
   @Field()

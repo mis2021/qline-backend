@@ -2,7 +2,8 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { QueueService } from './queue.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateQueueInput } from './dto/create-queue.input';
-import { Queue } from './entities/queue.model';
+import { Queue } from './entities/queue.entity';
+import { UpdateQueueInput } from './dto/update-queue.input';
 
 @Resolver(() => Queue)
 export class QueueResolver {
@@ -19,25 +20,25 @@ export class QueueResolver {
       where: { departmentId },
       orderBy: { createdAt: 'asc' },
     });
+  
   }
 
   @Mutation(() => String)
   async createQueue(
     @Args('createQueueInput') input: CreateQueueInput,
   ): Promise<string> {
-    const {departmentId, type, priority, status = 'WAITING' } = input;
+    const { departmentId, type, priority, status = 'WAITING' } = input;
 
-
-      if (departmentId === 1) {
-    throw new Error('Queuing under departmentId 1 is not allowed.');
-  }
+    if (departmentId === 1) {
+      throw new Error('Queuing under departmentId 1 is not allowed.');
+      
+    }
     const count = await this.prisma.queue.count({
-      where: {departmentId },
+      where: { departmentId },
     });
 
     const queue = await this.prisma.queue.create({
       data: {
-       
         departmentId,
         number: count + 1,
         type,
@@ -54,4 +55,11 @@ export class QueueResolver {
 
     return formattedQueue;
   }
+ @Mutation(() => Queue)
+updateQueue(
+  @Args('updateQueueInput') updateQueueInput: UpdateQueueInput,
+) {
+  return this.queueService.updateQueue(updateQueueInput);
 }
+}
+

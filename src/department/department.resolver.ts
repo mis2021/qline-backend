@@ -37,7 +37,6 @@ export class DepartmentResolver {
       updateDepartmentInput,
     );
   }
-
   @Mutation(() => Department)
   async removeDepartment(@Args('id', { type: () => Int }) id: number) {
     console.log('Department Deleted', id);
