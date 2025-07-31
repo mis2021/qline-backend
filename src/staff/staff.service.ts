@@ -36,7 +36,7 @@ export class StaffService {
     });
   }
 
-  async findOne(id: number, p0: { include: { department: boolean; }; }) {
+  async findOne(id: number) {
     return this.prisma.staff.findUnique({
       where: { id },
       include: {

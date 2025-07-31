@@ -20,20 +20,24 @@ export class AuthResolver {
     @Args('staffPass') staffPass: string,
   ): Promise<Login> {
     const user = await this.authService.validateUser(staffUser, staffPass);
-    const token = await this.authService.login(user);
-
     
-    const staff = await this.staffService.findOne(user.id, {
-      include: {
-        department: true
-      }
-    });
+    if (!user){
+      return {
+        access_token: '',
+        role: '',
+        success:false,
+        staff: undefined,
+      };
+    }
 
+    const token = await this.authService.login(user);
+    const staff = await this.staffService.findOne(user.id);
+    
     return {
       access_token: token.access_token,
-      role: user.role.name,
+      role: staff?.role?.name || '',
       success: true,
-      staff: staff ?? undefined,
+      staff: staff || undefined,
     };
   }
 

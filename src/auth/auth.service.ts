@@ -9,7 +9,6 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-    private configService: ConfigService,
   ) {}
 
   async validateUser(staffUser: string, staffPass: string) {
@@ -30,13 +29,12 @@ export class AuthService {
 
   async login(user: any) {
     const payload = { 
+      staffUser: user.staffUser,
       sub: user.id, 
       role: user.role.name,
-      departmentId: user.department?.id,
     };
     return {
       access_token: this.jwtService.sign(payload),
-      user, 
     };
   }
 }

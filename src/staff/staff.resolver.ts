@@ -19,11 +19,8 @@ export class StaffResolver {
   }
   @Query(() => Staff, { name: 'findStaff' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
-    const staff = await this.staffService.findOne(id, {
-      include: {
-        department: true,
-      },
-    });
+    const staff = await this.staffService.findOne(id);
+    
     if (!staff) {
       throw new NotFoundException(`Staff with ID ${id} not found`);
     }

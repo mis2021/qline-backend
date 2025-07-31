@@ -19,11 +19,11 @@ export class Staff {
   @Field(() => Int)
   roleId: number;
 
-  @Field(() => Role) 
-  role: Role;
+  @Field(() => Role, {nullable: true}) 
+  role?: Role;
 
-  @Field(() => Department)
-  department: Department;
+  @Field(() => Department, {nullable:true})
+  department?: Department;
 
   @Field()
   createdAt: Date;
