@@ -7,5 +7,7 @@ export class Department {
   @Field()
   departmentName: string;
   @Field()
+  prefix: String;
+  @Field()
   createdAt: Date;
 }
