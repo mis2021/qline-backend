@@ -4,5 +4,7 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 export class CreateDepartmentInput {
   @Field()
   departmentName: string;
+  @Field()
+  prefix: string;
   
 }

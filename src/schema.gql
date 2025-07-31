@@ -4,6 +4,7 @@
 
 input CreateDepartmentInput {
   departmentName: String!
+  prefix: String!
 }
 
 input CreateQueueInput {
@@ -99,6 +100,7 @@ type Staff {
 input UpdateDepartmentInput {
   departmentName: String!
   id: Int!
+  prefix: String
 }
 
 input UpdateQueueInput {

@@ -7,13 +7,14 @@ import { UpdateDepartmentInput } from './dto/update-department.input';
 export class DepartmentService {
   constructor(private prisma: PrismaService) {}
 
-  create(createDepartmentInput: CreateDepartmentInput) {
-    return this.prisma.department.create({
-      data: {
-        departmentName: createDepartmentInput.departmentName,
-      },
-    });
-  }
+ create(createDepartmentInput: CreateDepartmentInput) {
+  return this.prisma.department.create({
+    data: {
+      departmentName: createDepartmentInput.departmentName,
+      prefix: createDepartmentInput.prefix, 
+    },
+  });
+}
 
  async findAll() {
   return this.prisma.department.findMany({
