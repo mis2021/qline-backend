@@ -9,7 +9,7 @@ export class Login {
   @Field()
   role: string;
 
-  @Field(() => Staff, { nullable: true }) 
+  @Field(() => Staff, { nullable: true })
   staff?: Staff;
 
   @Field()

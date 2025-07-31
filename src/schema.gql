@@ -87,10 +87,10 @@ type Role {
 
 type Staff {
   createdAt: DateTime!
-  department: Department
+  department: Department!
   departmentId: Int!
   id: Float!
-  role: Role
+  role: Role!
   roleId: Int!
   staffPass: String!
   staffUser: String!

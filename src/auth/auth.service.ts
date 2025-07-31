@@ -9,32 +9,44 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async validateUser(staffUser: string, staffPass: string) {
     const user = await this.prisma.staff.findUnique({
       where: { staffUser },
-      include: {
-        role: true,
-        department: true, 
-      },
+      include: { role: true },
     });
 
     if (user && (await bcrypt.compare(staffPass, user.staffPass))) {
       const { staffPass, ...result } = user;
       return result;
     }
+
     throw new UnauthorizedException('Invalid username or password');
   }
 
   async login(user: any) {
-    const payload = { 
-      staffUser: user.staffUser,
-      sub: user.id, 
-      role: user.role.name,
-    };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  const payload = { sub: user.id, username: user.staffUser };
+
+  const access_token = await this.jwtService.signAsync(payload);
+
+  const staff = await this.prisma.staff.findUnique({
+    where: { id: user.id },
+    include: {
+      department: true,
+      role: true,
+    },
+  });
+
+  if (!staff) {
+    throw new Error('Staff not found');
   }
+
+  return {
+    access_token,
+    staff,
+    role: staff.role.name,
+  };
+}
 }
