@@ -38,6 +38,7 @@ type Department {
 type Login {
   access_token: String!
   role: String!
+  staff: Staff
   success: Boolean!
 }
 

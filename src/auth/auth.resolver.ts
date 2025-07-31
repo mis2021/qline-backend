@@ -1,4 +1,4 @@
-// auth.resolver.ts
+
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UseGuards } from '@nestjs/common';
@@ -11,7 +11,7 @@ import { Login } from './dto/login';
 export class AuthResolver {
   constructor(
     private authService: AuthService,
-    private staffService: StaffService, 
+    private staffService: StaffService,
   ) {}
 
   @Mutation(() => Login)
@@ -22,10 +22,18 @@ export class AuthResolver {
     const user = await this.authService.validateUser(staffUser, staffPass);
     const token = await this.authService.login(user);
 
+    
+    const staff = await this.staffService.findOne(user.id, {
+      include: {
+        department: true
+      }
+    });
+
     return {
       access_token: token.access_token,
-      role: user.role.name, 
+      role: user.role.name,
       success: true,
+      staff: staff ?? undefined,
     };
   }
 
