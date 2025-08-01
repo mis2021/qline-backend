@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',
-      'https://1rzx9lxq-5173.asse.devtunnels.ms/form'
+      'https://1rzx9lxq-5173.asse.devtunnels.ms'
     ],
     credentials: true,
   });
