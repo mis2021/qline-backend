@@ -24,37 +24,43 @@ export class QueueResolver {
   }
 
   @Mutation(() => String)
-  async createQueue(
-    @Args('createQueueInput') input: CreateQueueInput,
-  ): Promise<string> {
-    const { departmentId, type, priority, status = 'WAITING' } = input;
+async createQueue(
+  @Args('createQueueInput') input: CreateQueueInput,
+): Promise<string> {
+  const { departmentId, type, priority, status = 'WAITING' } = input;
 
-    if (departmentId === 1) {
-      throw new Error('Queuing under departmentId 1 is not allowed.');
-      
-    }
-    const count = await this.prisma.queue.count({
-      where: { departmentId },
-    });
-
-    const queue = await this.prisma.queue.create({
-      data: {
-        departmentId,
-        number: count + 1,
-        type,
-        priority,
-        status,
-      },
-      include: {
-        department: true,
-      },
-    });
-
-    const prefix = queue.department.departmentName.slice(0, 4).toUpperCase();
-    const formattedQueue = `${prefix}-${queue.number}`;
-
-    return formattedQueue;
+  if (departmentId === 1) {
+    throw new Error('Queuing under departmentId 1 is not allowed.');
   }
+
+  const count = await this.prisma.queue.count({
+    where: { departmentId },
+  });
+
+  const queue = await this.prisma.queue.create({
+    data: {
+      departmentId,
+      number: count + 1,
+      type,
+      priority,
+      status,
+    },
+    include: {
+      department: true,
+    },
+  });
+
+
+  this.queueService.emitQueue({
+    type: 'NEW_QUEUE',
+    queue,
+  });
+
+  const prefix = queue.department.departmentName.slice(0, 4).toUpperCase();
+  const formattedQueue = `${prefix}-${queue.number}`;
+
+  return formattedQueue;
+}
  @Mutation(() => Queue)
 updateQueue(
   @Args('updateQueueInput') updateQueueInput: UpdateQueueInput,

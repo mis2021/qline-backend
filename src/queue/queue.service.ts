@@ -11,12 +11,19 @@ export class QueueService {
   emitQueue(data: any) {
     this.queueSubject.next(data);
   }
-  updateQueue(updateQueueInput: UpdateQueueInput) {
+  async updateQueue(updateQueueInput: UpdateQueueInput) {
   const { id, ...data } = updateQueueInput;
 
-  return this.prisma.queue.update({
+  const updatedQueue = await this.prisma.queue.update({
     where: { id },
     data,
   });
-  }
+  this.emitQueue({
+    type: 'QUEUE_UPDATED',
+    queue: updatedQueue,
+  });
+
+  return updatedQueue;
+}
+  
 }
